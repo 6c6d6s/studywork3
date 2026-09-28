@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 220" role="img" aria-label="学生向 AI 助教提问并得到解答的示意图">
+  <defs>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity=".07"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="16" width="404" height="188" rx="18" fill="url(#card)" stroke="#ffffff" stroke-opacity=".35"/>
+
+  <rect x="30" y="40" width="200" height="34" rx="10" fill="#ffffff" opacity=".9"/>
+  <rect x="44" y="52" width="120" height="10" rx="5" fill="#c9d6f5"/>
+  <rect x="44" y="86" width="176" height="34" rx="10" fill="#ffffff" opacity=".55"/>
+  <rect x="58" y="98" width="104" height="10" rx="5" fill="#d9e2f8"/>
+
+  <rect x="120" y="140" width="240" height="40" rx="12" fill="#ffffff" opacity=".92"/>
+  <rect x="136" y="152" width="96" height="10" rx="5" fill="#9fb6e8"/>
+  <rect x="136" y="166" width="180" height="8" rx="4" fill="#dce5f8"/>
+
+  <circle cx="356" cy="70" r="26" fill="#3ec9e0" opacity=".85"/>
+  <path d="M348 70l7 7 14-15" stroke="#0d2a5c" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

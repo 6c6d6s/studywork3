@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 助教答疑平台注册页，包含账号信息、身份信息与个性化设置三组表单，演示 HTML5 表单增强与约束校验。">
+  <title>注册 | AI 助教答疑平台</title>
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="page page--register">
+
+  <header class="topbar">
+    <a class="topbar__brand" href="index.html">
+      <img src="assets/img/logo.svg" alt="AI 助教答疑平台徽标" width="32" height="32">
+      <span>AI 助教答疑平台</span>
+    </a>
+    <nav class="topbar__nav" aria-label="账号导航">
+      <span class="topbar__hint">已经注册过？</span>
+      <a class="link" href="index.html">返回登录</a>
+    </nav>
+  </header>
+
+  <main class="register">
+    <section class="register__intro">
+      <h1 class="register__title">创建你的学习账号</h1>
+      <p class="register__desc">
+        填写下面的三组信息，平台会据此生成个性化的答疑首页：默认学科兴趣决定推荐问题，
+        提问时段决定助教的在线提醒，主题色用于区分个人工作台。
+      </p>
+
+      <!-- 进度条 + output：随填写情况实时更新，不使用图片 -->
+      <div class="progress">
+        <label for="fillProgress" class="progress__label">资料完整度</label>
+        <progress id="fillProgress" max="100" value="0">0%</progress>
+        <output id="fillProgressText" for="fillProgress">0%</output>
+      </div>
+    </section>
+
+    <form id="registerForm" class="form form--register" action="#" method="post" enctype="multipart/form-data" novalidate>
+      <!-- 第一组：账号信息 -->
+      <fieldset class="fieldset">
+        <legend>1. 账号信息</legend>
+
+        <div class="grid grid--2">
+          <div class="field">
+            <label for="username">用户名 <span class="required" aria-hidden="true">*</span></label>
+            <div class="field__control">
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="字母开头，4-16 位字母、数字或下划线"
+                pattern="^[A-Za-z][A-Za-z0-9_]{3,15}$"
+                minlength="4"
+                maxlength="16"
+                autocomplete="username"
+                spellcheck="false"
+                required>
+              <span class="field__badge" id="usernameBadge" aria-live="polite"></span>
+            </div>
+            <span class="field__hint">登录后可在个人中心修改一次</span>
+          </div>
+
+          <div class="field">
+            <label for="email">常用邮箱 <span class="required" aria-hidden="true">*</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="name@example.com"
+              autocomplete="email"
+              multiple
+              required>
+            <span class="field__hint">用于接收答疑回复与每周学习报告</span>
+          </div>
+
+          <div class="field">
+            <label for="phone">手机号 <span class="required" aria-hidden="true">*</span></label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="11 位中国大陆手机号"
+              inputmode="numeric"
+              pattern="^1[3-9][0-9]{9}$"
+              autocomplete="tel-national"
+              required>
+            <span class="field__hint">仅用于身份校验，不会公开展示</span>
+          </div>
+
+          <div class="field">
+            <label for="school">所在学校</label>
+            <input
+              type="text"
+              id="school"
+              name="school"
+              list="schoolList"
+              placeholder="输入或从列表中选择"
+              autocomplete="organization">
+            <!-- datalist 提供可选建议，同时允许自由输入 -->
+            <datalist id="schoolList">
+              <option value="示范大学"></option>
+              <option value="示范大学 计算机学院"></option>
+              <option value="示范大学 数学学院"></option>
+              <option value="示范大学 外国语学院"></option>
+            </datalist>
+          </div>
+
+          <div class="field">
+            <label for="password">设置密码 <span class="required" aria-hidden="true">*</span></label>
+            <div class="field__control field__control--password">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="至少 8 位，建议包含大小写与数字"
+                minlength="8"
+                maxlength="32"
+                autocomplete="new-password"
+                required>
+              <button type="button" class="ghost-btn" id="togglePassword" aria-pressed="false" aria-controls="password">显示</button>
+            </div>
+            <!-- meter 显示密码强度，output 同步文字结论 -->
+            <div class="strength">
+              <meter id="pwMeter" min="0" max="4" low="2" high="3" optimum="4" value="0">0</meter>
+              <output id="pwText" for="password pwMeter">尚未输入</output>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="password2">确认密码 <span class="required" aria-hidden="true">*</span></label>
+            <input
+              type="password"
+              id="password2"
+              name="password2"
+              placeholder="请再次输入密码"
+              minlength="8"
+              maxlength="32"
+              autocomplete="new-password"
+              required>
+            <span class="field__hint">两次输入需完全一致</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 第二组：身份信息 -->
+      <fieldset class="fieldset">
+        <legend>2. 身份信息</legend>
+
+        <div class="field">
+          <span class="field__label" id="roleLabel">平台身份 <span class="required" aria-hidden="true">*</span></span>
+          <div class="chip-group" role="radiogroup" aria-labelledby="roleLabel">
+            <input type="radio" name="role" id="roleStudent" value="学生" checked>
+            <label for="roleStudent">学生</label>
+            <input type="radio" name="role" id="roleTeacher" value="教师">
+            <label for="roleTeacher">教师</label>
+            <input type="radio" name="role" id="roleAssistant" value="助教">
+            <label for="roleAssistant">助教</label>
+          </div>
+        </div>
+
+        <div class="grid grid--3">
+          <div class="field">
+            <label for="serial" id="serialLabel">学号</label>
+            <input
+              type="text"
+              id="serial"
+              name="serial"
+              placeholder="8 位数字"
+              inputmode="numeric"
+              pattern="^[0-9]{8}$"
+              maxlength="8"
+              required>
+          </div>
+
+          <div class="field">
+            <label for="college">所属学院 <span class="required" aria-hidden="true">*</span></label>
+            <select id="college" name="college" required>
+              <option value="" selected disabled>请选择学院</option>
+              <optgroup label="信息与工程类">
+                <option value="计算机学院">计算机学院</option>
+                <option value="软件学院">软件学院</option>
+                <option value="电子信息学院">电子信息学院</option>
+              </optgroup>
+              <optgroup label="基础学科类">
+                <option value="数学学院">数学学院</option>
+                <option value="物理学院">物理学院</option>
+                <option value="外国语学院">外国语学院</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="grade">入学年份</label>
+            <input
+              type="number"
+              id="grade"
+              name="grade"
+              placeholder="2026"
+              min="2000"
+              max="2035"
+              step="1"
+              value="2026">
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 第三组：个性化设置 -->
+      <fieldset class="fieldset">
+        <legend>3. 个性化设置</legend>
+
+        <div class="field">
+          <span class="field__label">感兴趣的学科方向（可多选）</span>
+          <div class="check-grid">
+            <label class="checkbox"><input type="checkbox" name="interest" value="数据结构与算法" checked><span>数据结构与算法</span></label>
+            <label class="checkbox"><input type="checkbox" name="interest" value="计算机网络"><span>计算机网络</span></label>
+            <label class="checkbox"><input type="checkbox" name="interest" value="操作系统"><span>操作系统</span></label>
+            <label class="checkbox"><input type="checkbox" name="interest" value="数据库原理"><span>数据库原理</span></label>
+            <label class="checkbox"><input type="checkbox" name="interest" value="高等数学"><span>高等数学</span></label>
+            <label class="checkbox"><input type="checkbox" name="interest" value="大学物理"><span>大学物理</span></label>
+          </div>
+        </div>
+
+        <div class="grid grid--2">
+          <div class="field">
+            <label for="course">最想提问的课程</label>
+            <input type="text" id="course" name="course" list="courseList" placeholder="例如：数据结构">
+            <datalist id="courseList">
+              <option value="数据结构"></option>
+              <option value="计算机网络"></option>
+              <option value="操作系统"></option>
+              <option value="数据库原理"></option>
+              <option value="高等数学"></option>
+            </datalist>
+          </div>
+
+          <div class="field">
+            <label for="askTime">常用提问时段</label>
+            <input type="time" id="askTime" name="askTime" value="20:00" min="06:00" max="23:59" step="900">
+            <span class="field__hint">助教将在该时段优先响应你的提问</span>
+          </div>
+        </div>
+
+        <div class="grid grid--3">
+          <div class="field">
+            <label for="weekly">每周答疑目标（次）</label>
+            <div class="range">
+              <input type="range" id="weekly" name="weekly" min="1" max="20" step="1" value="6">
+              <output id="weeklyText" for="weekly">6 次</output>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="themeColor">个人工作台主题色</label>
+            <div class="color-row">
+              <input type="color" id="themeColor" name="themeColor" value="#1f5eff">
+              <output id="colorText" for="themeColor">#1f5eff</output>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="avatar">头像</label>
+            <div class="avatar-row">
+              <img id="avatarPreview" class="avatar" src="assets/img/avatar-placeholder.svg" alt="头像预览占位图" width="48" height="48">
+              <input type="file" id="avatar" name="avatar" accept="image/png,image/jpeg,image/webp">
+            </div>
+            <span class="field__hint">支持 PNG、JPG，建议 200×200</span>
+          </div>
+        </div>
+
+        <!-- details 折叠块：把低频字段收起来，减少首屏压力 -->
+        <details class="advanced">
+          <summary>可选信息（邀请码、个人主页）</summary>
+          <div class="grid grid--2">
+            <div class="field">
+              <label for="invite">邀请码</label>
+              <input type="text" id="invite" name="invite" placeholder="6 位大写字母或数字" pattern="^[A-Z0-9]{6}$" maxlength="6">
+            </div>
+            <div class="field">
+              <label for="homepage">个人主页</label>
+              <input type="url" id="homepage" name="homepage" placeholder="https://example.com" pattern="https?://.+">
+            </div>
+          </div>
+        </details>
+
+        <label class="checkbox checkbox--agree">
+          <input type="checkbox" id="agree" name="agree" required>
+          <span>我已阅读并同意《平台服务协议》与《隐私说明》，愿意接收答疑回复通知。</span>
+        </label>
+      </fieldset>
+
+      <div class="form__actions">
+        <button type="submit" class="btn btn--primary" id="registerBtn">注册并进入平台</button>
+        <button type="reset" class="btn btn--ghost" id="resetBtn">重置表单</button>
+        <span class="form__autosave" id="autosaveTip" role="status" aria-live="polite"></span>
+      </div>
+
+      <p class="form__message" id="formMessage" role="alert" aria-live="assertive"></p>
+
+      <!-- 提交成功后的信息汇总，用 output + dl 展示 -->
+      <output id="summary" class="summary" for="registerForm" hidden></output>
+
+      <p class="form__foot">已有账号？<a class="link" href="index.html">返回登录</a></p>
+    </form>
+  </main>
+
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="切换深浅色主题">🌙 深色</button>
+
+  <script src="assets/js/theme.js"></script>
+  <script src="assets/js/register.js"></script>
+</body>
+</html>

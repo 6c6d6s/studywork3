@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI 助教答疑平台登录页，支持学生、教师、助教三种角色登录，提供表单校验、密码可见性与主题切换等交互。">
+  <meta name="author" content="AI 助教答疑平台课程项目组">
+  <title>登录 | AI 助教答疑平台</title>
+  <link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="page page--auth">
+
+  <main class="auth">
+    <!-- 左侧品牌介绍区：用语义化 section + aside 说明产品定位 -->
+    <aside class="brand" aria-label="平台介绍">
+      <div class="brand__logo">
+        <img src="assets/img/logo.svg" alt="AI 助教答疑平台徽标" width="48" height="48">
+        <span class="brand__name">AI 助教答疑平台</span>
+      </div>
+
+      <h1 class="brand__title">智能答疑<br>让每一个提问都被认真回答</h1>
+      <p class="brand__desc">
+        基于大模型的多轮答疑系统，覆盖课程知识点讲解、作业思路引导与错题复盘，
+        学生随时提问，助教与教师在同一个工作台协同处理。
+      </p>
+
+      <ul class="brand__features">
+        <li><span class="dot" aria-hidden="true"></span>课堂知识库实时检索，答案附引用来源</li>
+        <li><span class="dot" aria-hidden="true"></span>多轮追问，保留上下文与推理过程</li>
+        <li><span class="dot" aria-hidden="true"></span>教师端沉淀高频问题，一键生成讲评</li>
+      </ul>
+
+      <figure class="brand__figure">
+        <img src="assets/img/illustration.svg" alt="学生向 AI 助教提问并得到解答的示意图" width="420" height="220">
+      </figure>
+    </aside>
+
+    <!-- 右侧登录表单区 -->
+    <section class="panel" aria-labelledby="loginTitle">
+      <header class="panel__head">
+        <h2 id="loginTitle" class="panel__title">欢迎回来</h2>
+        <!-- 根据访问时间段动态生成的个性化问候语 -->
+        <p class="panel__subtitle" id="greeting" data-guest="请登录后继续你的学习任务">请登录后继续你的学习任务</p>
+      </header>
+
+      <!-- 角色切换：radio + label 的纯表单实现，无需额外脚本即可切换 -->
+      <div class="role-switch" role="radiogroup" aria-label="选择登录身份">
+        <input type="radio" name="role" id="roleStudent" value="student" checked>
+        <label for="roleStudent">学生</label>
+        <input type="radio" name="role" id="roleTeacher" value="teacher">
+        <label for="roleTeacher">教师</label>
+        <input type="radio" name="role" id="roleAssistant" value="assistant">
+        <label for="roleAssistant">助教</label>
+      </div>
+
+      <form id="loginForm" class="form" action="#" method="post" novalidate autocomplete="on">
+        <!-- 账号输入：autocomplete 让浏览器密码管理器正确识别字段用途 -->
+        <div class="field">
+          <label for="account" id="accountLabel">学号</label>
+          <input
+            type="text"
+            id="account"
+            name="account"
+            inputmode="numeric"
+            autocomplete="username"
+            placeholder="请输入 8 位学号"
+            pattern="^[0-9]{8}$"
+            minlength="8"
+            maxlength="8"
+            required
+            autofocus
+            aria-describedby="accountHint">
+          <span class="field__hint" id="accountHint">学生账号为教务系统学号</span>
+        </div>
+
+        <div class="field">
+          <label for="password">密码</label>
+          <div class="field__control field__control--password">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              autocomplete="current-password"
+              placeholder="请输入密码，至少 8 位"
+              minlength="8"
+              maxlength="32"
+              required
+              aria-describedby="capsHint">
+            <button type="button" class="ghost-btn" id="togglePassword" aria-pressed="false" aria-controls="password">显示</button>
+          </div>
+          <p class="field__warning" id="capsHint" hidden>提示：Caps Lock 处于打开状态</p>
+        </div>
+
+        <div class="form__row">
+          <label class="checkbox">
+            <input type="checkbox" id="remember" name="remember" checked>
+            <span>记住我的账号</span>
+          </label>
+          <a class="link" href="#" id="forgotLink">忘记密码？</a>
+        </div>
+
+        <button type="submit" class="btn btn--primary" id="submitBtn">登录</button>
+
+        <!-- setCustomValidity 触发的自定义错误提示容器 -->
+        <p class="form__message" id="formMessage" role="status" aria-live="polite"></p>
+
+        <p class="form__foot">
+          还没有账号？<a class="link" href="register.html">立即注册</a>
+        </p>
+      </form>
+
+      <div class="divider"><span>其他登录方式</span></div>
+
+      <div class="oauth">
+        <button type="button" class="btn btn--ghost" data-oauth="校园统一身份认证">校园统一身份认证</button>
+        <button type="button" class="btn btn--ghost" data-oauth="企业微信">企业微信</button>
+      </div>
+
+      <p class="panel__tip">
+        登录遇到问题？请联系课程助教，或查看 <a class="link" href="#" id="helpLink">登录帮助</a>。
+      </p>
+    </section>
+  </main>
+
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="切换深浅色主题">🌙 深色</button>
+
+  <script src="assets/js/theme.js"></script>
+  <script src="assets/js/login.js"></script>
+</body>
+</html>
